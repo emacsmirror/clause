@@ -23,7 +23,9 @@
 ;;; Commentary:
 
 ;; Functions for moving, marking and killing by clause.
-;; For now a clause is delimited by , ; : ( ) and –. You can add extra delimiters by customizing `clause-extra-delimiters'
+
+;; A clause is delimited by , ; : ( ) and –. You can add extra
+;; delimiters by customizing `clause-extra-delimiters'
 
 ;;; Code:
 (require 'segment)
@@ -87,7 +89,7 @@ Returns the position just after the opening paren."
                      (save-excursion (clause-forward-sentence)
                                      (point))
                      t)) ; nil when nothing found
-
+;;;###autoload
 (defun clause-forward-clause (&optional arg)
   "Move forward to beginning of next clause.
 With ARG, do this that many times."
@@ -98,6 +100,7 @@ With ARG, do this that many times."
             (clause--opening-paren-in-sentence))
           (clause-forward-sentence)))))
 
+;;;###autoload
 (defun clause-backward-clause (&optional arg)
   "Move backward to beginning of current clause.
 With ARG, do this that many times."
@@ -111,6 +114,7 @@ With ARG, do this that many times."
                               t)
           (clause-backward-sentence)))))
 
+;;;###autoload
 (defun clause-kill-to-clause (&optional arg)
   "Kill text up to the next clause.
 With ARG, do so that many times."
@@ -121,6 +125,7 @@ With ARG, do so that many times."
           (zap-up-to-char 1 (string-to-char "("))
         (kill-sentence)))))
 
+;;;###autoload
 (defun clause-kill-current-clause (&optional arg)
   "Kill the current clause.
 With ARG, do so that many times."
@@ -132,12 +137,14 @@ With ARG, do so that many times."
           (zap-up-to-char 1 (string-to-char "("))
         (kill-sentence)))))
 
+;;;###autoload
 (defun clause-mark-clause ()
   "Mark current clause."
   (interactive "p")
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
     (mark-sentence))) ; ext dep
 
+;;;###autoload
 (defun clause-mark-to-clause (&optional arg)
   "Mark from point to end of current clause.
 With ARG, do so that many times."
