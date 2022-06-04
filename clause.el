@@ -132,7 +132,7 @@ With ARG, do so that many times."
   (interactive "p")
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
     (clause-backward-clause)
-    (dotimes (count (or arg 1))
+    (dotimes (_count (or arg 1))
       (if (clause--opening-paren-in-sentence)
           (zap-up-to-char 1 (string-to-char "("))
         (kill-sentence)))))
