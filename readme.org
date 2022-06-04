@@ -5,3 +5,5 @@ This repo provides functions to move by clause, mark by clause, and kill by clau
 A clause is delimited by =,= =;= =:= =(= =)= and =–=, in addition to the characters in =sentence-end=. If you want to add any extra clause delimiters, customize =clause-extra-delimiters=.
 
 It should handle org footnotes correctly too, if they aren't inline.
+
+If you set =clause-use-segment= to t, this library uses the complex sentence-ending rules in [[https://codeberg.org/martianh/segment][segment.el]] to avoid counting things like "i.e." as ending sentences. You need to set the language for segment to use. See =segment-current-language= and =segment-set-language-for-buffer=.
