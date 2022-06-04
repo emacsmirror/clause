@@ -23,7 +23,7 @@
 ;;; Commentary:
 
 ;; Functions for moving, marking and killing by clause.
-;; For now a clause is delimited by , ; : ( ) and –.
+;; For now a clause is delimited by , ; : ( ) and –. You can add extra delimiters by customizing `clause-extra-delimiters'
 
 ;;; Code:
 (require 'segment)
@@ -34,15 +34,19 @@
   :group 'convenience)
 
 (defcustom clause-use-segment t
-  "Whether to use `segment' to determine clause and sentence endings."
-  :group 'clause)
+  "Whether to use `segment' to determine clause and sentence endings.
+Note that segment's rules are language-based. Call
+`segment-set-language-for-buffer' to specify which language rules
+to use."
+  :type 'boolean)
 
 (defcustom clause-handle-org-footnotes nil
   "Whether to handle org-footnotes."
-  :group 'clause)
+  :type 'boolean)
 
 (defcustom clause-extra-delimiters nil
-  "Extra characters to add to the clause-ending regex.")
+  "Extra characters to add to the clause-ending regex."
+  :type 'string)
 
 (defvar clause-forward-sentence-function
   (if clause-use-segment
