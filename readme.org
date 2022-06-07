@@ -7,3 +7,10 @@ A clause is delimited by =,= =;= =:= =(= =)= and =–=, in addition to the chara
 It should handle org footnotes correctly too, if they aren't inline.
 
 If you set =clause-use-segment= to t, this library uses the complex sentence-ending rules in [[https://codeberg.org/martianh/segment][segment.el]] to avoid counting things like "i.e." as ending sentences. You need to set the language for segment to use. See =segment-current-language= and =segment-set-language-for-buffer=.
+
+* feedback, contributing
+
+If you use it and run into any issues, feel free to open an issue or email me.
+
+If you can see how to improve it, feel free to send a patch or open a PR.
+
