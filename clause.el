@@ -140,7 +140,7 @@ With ARG, do so that many times."
 ;;;###autoload
 (defun clause-mark-clause ()
   "Mark current clause."
-  (interactive "p")
+  (interactive)
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
     (mark-sentence))) ; ext dep
 
