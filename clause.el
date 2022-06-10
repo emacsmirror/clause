@@ -50,26 +50,28 @@ to use."
   "Extra characters to add to the clause-ending regex."
   :type 'string)
 
-(defvar clause-forward-sentence-function
+(defvar clause-simplified-org-footnote-re
+  "\\(\\[fn:[-_[:word:]]+\\]\\)?")
+
+(defun clause-forward-sentence-function ()
+  "Return the forkward sentence function to use."
   (if clause-use-segment
       'segment-forward-sentence
     'forward-sentence))
 
-(defvar clause-backward-sentence-function
+(defun clause-backward-sentence-function ()
+  "Return the backward sentence function to use."
   (if clause-use-segment
       'segment-backward-sentence
     'backward-sentence))
 
-(defvar clause-simplified-org-footnote-re
-  "\\(\\[fn:[-_[:word:]]+\\]\\)?")
-
 (defun clause-forward-sentence (&optional arg)
   "Call `clause-forward-sentence-function' with ARG."
-  (apply clause-forward-sentence-function (list arg)))
+  (apply (clause-forward-sentence-function) (list arg)))
 
 (defun clause-backward-sentence (&optional arg)
   "Call `clause-backward-sentence-function' with ARG."
-  (apply clause-backward-sentence-function (list arg)))
+  (apply (clause-backward-sentence-function) (list arg)))
 
 (defun clause--sentence-end-base-clause-re ()
   "Return a `sentence-end-base' type regex with clause-ending characters added."
