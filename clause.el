@@ -98,8 +98,8 @@ With ARG, do this that many times."
   (interactive "p")
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
     (dotimes (_count (or arg 1))
-      (or (unless (looking-at "(") ; prevent single ( being treated as clause
-            (clause--opening-paren-in-sentence))
+      (or (unless (looking-at "[[:space:]]*(") ; prevent single ( being treated as clause
+            (clause--after-space-clause-char))
           (clause-forward-sentence)))))
 
 ;;;###autoload
@@ -109,7 +109,7 @@ With ARG, do this that many times."
   (interactive "p")
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
     (dotimes (_count (or arg 1))
-      (or (re-search-backward "("
+      (or (re-search-backward "[(–]"
                               ;; limit search:
                               (save-excursion (clause-backward-sentence)
                                               (point))
@@ -123,7 +123,7 @@ With ARG, do so that many times."
   (interactive "p")
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
     (dotimes (_count (or arg 1))
-      (if (save-excursion (clause--opening-paren-in-sentence))
+      (if (save-excursion (clause--after-space-clause-char))
           (zap-up-to-char 1 (string-to-char "("))
         (kill-sentence)))))
 
@@ -135,7 +135,7 @@ With ARG, do so that many times."
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
     (clause-backward-clause)
     (dotimes (_count (or arg 1))
-      (if (clause--opening-paren-in-sentence)
+      (if (clause--after-space-clause-char)
           (zap-up-to-char 1 (string-to-char "("))
         (kill-sentence)))))
 
