@@ -79,8 +79,7 @@ to use."
 
 (defun clause--sentence-end-base-clause-re ()
   "Return a `sentence-end-base' type regex with clause-ending characters added."
-  (concat "[)]*" ; poss closing parens prior to clause char
-          "[" ; opening of sentence-end-base regex
+  (concat "[" ; opening of sentence-end-base regex
           "),;:" ; our separators
           clause-extra-delimiters
           (substring sentence-end-base 1)
