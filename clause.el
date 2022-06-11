@@ -103,11 +103,8 @@ With ARG, do this that many times."
   (interactive "p")
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
     (dotimes (_count (or arg 1))
-      (or (unless
-              ;; prevent single ( being treated as clause
-              (looking-at (concat "[[:space:]]*"
-                                  clause-non-sentence-end-clause-re))
-            (clause--after-space-clause-char))
+      (skip-chars-forward " –(—]-") ; move past space + clause char
+      (or (clause--after-space-clause-char)
           (clause-forward-sentence)))))
 
 ;;;###autoload
