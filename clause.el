@@ -53,6 +53,10 @@ to use."
 (defvar clause-simplified-org-footnote-re
   "\\(\\[fn:[-_[:word:]]+\\]\\)?")
 
+(defvar clause-non-sentence-end-clause-re
+  ;; en dash, opening paren, em dash, 2 to 3 -
+  "\\([–(—]\\|\\(-\\)\\{2,3\\}\\)")
+
 (defun clause-forward-sentence-function ()
   "Return the forkward sentence function to use."
   (if clause-use-segment
@@ -86,7 +90,7 @@ to use."
 (defun clause--after-space-clause-char ()
   "Go to next clause character within the reach of `clause-forward-sentence'.
 Returns the position just after the character."
-  (re-search-forward "[–(—]"
+  (re-search-forward clause-non-sentence-end-clause-re
                      ;; limit search:
                      (save-excursion (clause-forward-sentence)
                                      (point))
@@ -99,7 +103,10 @@ With ARG, do this that many times."
   (interactive "p")
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
     (dotimes (_count (or arg 1))
-      (or (unless (looking-at "[[:space:]]*(") ; prevent single ( being treated as clause
+      (or (unless
+              ;; prevent single ( being treated as clause
+              (looking-at (concat "[[:space:]]*"
+                                  clause-non-sentence-end-clause-re))
             (clause--after-space-clause-char))
           (clause-forward-sentence)))))
 
@@ -110,14 +117,14 @@ With ARG, do this that many times."
   (interactive "p")
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
     (dotimes (_count (or arg 1))
-      (skip-chars-backward "–(— ") ; move before char + space
+      (skip-chars-backward "–(—]-") ; move before char + space
       (or (when
-              (re-search-backward "[–(—]"
+              (re-search-backward clause-non-sentence-end-clause-re
                                   ;; limit search:
                                   (save-excursion (clause-backward-sentence)
                                                   (point))
                                   t)
-            (skip-chars-forward "–(— ")) ; leave point after char + space
+            (skip-chars-forward "–(—]-")) ; leave point after char + space
           (clause-backward-sentence)))))
 
 ;;;###autoload
@@ -128,7 +135,7 @@ With ARG, do so that many times."
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
     (dotimes (_count (or arg 1))
       (if (save-excursion (clause--after-space-clause-char))
-          (zap-up-to-char 1 (string-to-char "("))
+          (kill-region (point) (re-search-forward clause-non-sentence-end-clause-re))
         (kill-sentence)))))
 
 ;;;###autoload
@@ -140,7 +147,7 @@ With ARG, do so that many times."
     (clause-backward-clause)
     (dotimes (_count (or arg 1))
       (if (clause--after-space-clause-char)
-          (zap-up-to-char 1 (string-to-char "("))
+          (kill-region (point) (re-search-forward clause-non-sentence-end-clause-re))
         (kill-sentence)))))
 
 ;;;###autoload
