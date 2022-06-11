@@ -2,7 +2,9 @@
 
 This repo provides functions to move by clause, mark by clause, and kill by clause.
 
-A clause is delimited by =,= =;= =:= =(= =)= and =–=, in addition to the characters in =sentence-end=. If you want to add any extra clause delimiters, customize =clause-extra-delimiters=.
+A clause is delimited by =,= =;= =:= =(= =)= and =–= [en or em dashes], in addition to the characters in =sentence-end=. If you want to add any extra clause delimiters, customize =clause-extra-delimiters=.
+
+If aims to leave point in the same relative position as =forward-sentence= and =backward-sentence=.
 
 It should handle org footnotes correctly too, if they aren't inline.
 
