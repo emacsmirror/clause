@@ -83,14 +83,15 @@ to use."
           (when clause-handle-org-footnotes
             clause-simplified-org-footnote-re)))
 
-(defun clause--opening-paren-in-sentence ()
-  "Go to next opening paren within the reach of `clause-forward-sentence'.
-Returns the position just after the opening paren."
-  (re-search-forward "("
+(defun clause--after-space-clause-char ()
+  "Go to next clause character within the reach of `clause-forward-sentence'.
+Returns the position just after the character."
+  (re-search-forward "[(—]"
                      ;; limit search:
                      (save-excursion (clause-forward-sentence)
                                      (point))
                      t)) ; nil when nothing found
+
 ;;;###autoload
 (defun clause-forward-clause (&optional arg)
   "Move forward to beginning of next clause.
