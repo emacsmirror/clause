@@ -114,7 +114,8 @@ With ARG, do this that many times."
     (dotimes (_count (or arg 1))
       (clause--move-past-clause)
       (or (clause--after-space-clause-char)
-          (clause-forward-sentence)))))
+          (clause-forward-sentence))
+      (clause--move-past-clause))))
 
 ;;;###autoload
 (defun clause-backward-clause (&optional arg)
