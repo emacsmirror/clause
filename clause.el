@@ -114,14 +114,14 @@ With ARG, do this that many times."
   (interactive "p")
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
     (dotimes (_count (or arg 1))
-      (skip-chars-backward "–(—]-") ; move before char + space
+      (skip-chars-backward "–(—]- ") ; move before clause char + space
       (or (when
               (re-search-backward clause-non-sentence-end-clause-re
                                   ;; limit search:
                                   (save-excursion (clause-backward-sentence)
                                                   (point))
                                   t)
-            (skip-chars-forward "–(—]-")) ; leave point after char + space
+            (skip-chars-forward " –(—]-")) ; leave point after clause char + space
           (clause-backward-sentence)))))
 
 ;;;###autoload
@@ -132,7 +132,8 @@ With ARG, do so that many times."
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
     (dotimes (_count (or arg 1))
       (if (save-excursion (clause--after-space-clause-char))
-          (kill-region (point) (re-search-forward clause-non-sentence-end-clause-re))
+          (kill-region (point) (re-search-forward
+                                clause-non-sentence-end-clause-re))
         (kill-sentence)))))
 
 ;;;###autoload
@@ -144,7 +145,8 @@ With ARG, do so that many times."
     (clause-backward-clause)
     (dotimes (_count (or arg 1))
       (if (clause--after-space-clause-char)
-          (kill-region (point) (re-search-forward clause-non-sentence-end-clause-re))
+          (kill-region (point) (re-search-forward
+                                clause-non-sentence-end-clause-re))
         (kill-sentence)))))
 
 ;;;###autoload
