@@ -35,7 +35,7 @@
   "Clause functions."
   :group 'convenience)
 
-(defcustom clause-use-segment t
+(defcustom clause-use-segment nil
   "Whether to use `segment' to determine clause and sentence endings.
 Note that segment's rules are language-based. Call
 `segment-set-language-for-buffer' to specify which language rules
