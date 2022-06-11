@@ -79,13 +79,12 @@ to use."
 
 (defun clause--sentence-end-base-clause-re ()
   "Return a `sentence-end-base' type regex with clause-ending characters added."
-  (concat ;"[)]*" ; poss closing parens prior to clause char
-   "[" ; opening of sentence-end-base regex
-   "),;:" ; our separators
-   clause-extra-delimiters
-   (substring sentence-end-base 1)
-   (when clause-handle-org-footnotes
-     clause-simplified-org-footnote-re)))
+  (concat "[" ; opening of sentence-end-base regex
+          "),;:" ; our separators
+          clause-extra-delimiters
+          (substring sentence-end-base 1)
+          (when clause-handle-org-footnotes
+            clause-simplified-org-footnote-re)))
 
 (defun clause--after-space-clause-char ()
   "Go to next clause character within the reach of `clause-forward-sentence'.
