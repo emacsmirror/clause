@@ -98,11 +98,12 @@ Returns the position just after the character."
 (defun clause--move-past-clause (&optional backward)
   "Move past a clause character or space.
 With BACKWARD, move backwards."
-  (if backward
-      (skip-chars-backward (concat " –(—-),;:.!?"
-                                   clause-extra-delimiters))
-    (skip-chars-forward (concat " –(—-),;:.!?"
-                                clause-extra-delimiters))))
+  (let ((clause-chars " –(—-),;:.!?"))
+    (if backward
+        (skip-chars-backward (concat clause-chars
+                                     clause-extra-delimiters))
+      (skip-chars-forward (concat clause-chars
+                                  clause-extra-delimiters)))))
 
 ;;;###autoload
 (defun clause-forward-clause (&optional arg)
