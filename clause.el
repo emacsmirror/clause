@@ -98,7 +98,7 @@ Returns the position just after the character."
 (defun clause--move-past-clause (&optional backward)
   "Move past a clause character or space.
 With BACKWARD, move backwards."
-  (let ((clause-chars " \t\n–(—-),;:.!?"))
+  (let ((clause-chars "–(—-),;:.!?"))
     (if backward
         (skip-chars-backward (concat clause-chars
                                      clause-extra-delimiters))
