@@ -110,18 +110,14 @@ With ARG, do this that many times."
   (interactive "p")
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
     (dotimes (_count (or arg 1))
-      ;; if we moved back to just inside a ( clause, we need to move past it:
-      (when (looking-back "[–(—]" (save-excursion
-                                   (backward-word)
-                                   (point)))
-        (backward-char 1))
+      (skip-chars-backward "–(— ") ; move before char + space
       (or (when
               (re-search-backward "[–(—]"
                                   ;; limit search:
                                   (save-excursion (clause-backward-sentence)
                                                   (point))
                                   t)
-            (skip-chars-forward "–(—")) ; leave point after clause char
+            (skip-chars-forward "–(— ")) ; leave point after char + space
           (clause-backward-sentence)))))
 
 ;;;###autoload
