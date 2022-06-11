@@ -75,18 +75,18 @@ to use."
 
 (defun clause--sentence-end-base-clause-re ()
   "Return a `sentence-end-base' type regex with clause-ending characters added."
-  (concat "[)]*" ; poss closing parens prior to clause char
-          "[" ; opening of sentence-end-base regex
-          ",;:—)" ; our separators
-          clause-extra-delimiters
-          (substring sentence-end-base 1)
-          (when clause-handle-org-footnotes
-            clause-simplified-org-footnote-re)))
+  (concat ;"[)]*" ; poss closing parens prior to clause char
+   "[" ; opening of sentence-end-base regex
+   "),;:" ; our separators
+   clause-extra-delimiters
+   (substring sentence-end-base 1)
+   (when clause-handle-org-footnotes
+     clause-simplified-org-footnote-re)))
 
 (defun clause--after-space-clause-char ()
   "Go to next clause character within the reach of `clause-forward-sentence'.
 Returns the position just after the character."
-  (re-search-forward "[(—]"
+  (re-search-forward "[–(—]"
                      ;; limit search:
                      (save-excursion (clause-forward-sentence)
                                      (point))
@@ -110,11 +110,18 @@ With ARG, do this that many times."
   (interactive "p")
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
     (dotimes (_count (or arg 1))
-      (or (re-search-backward "[(–]"
-                              ;; limit search:
-                              (save-excursion (clause-backward-sentence)
-                                              (point))
-                              t)
+      ;; if we moved back to just inside a ( clause, we need to move past it:
+      (when (looking-back "[–(—]" (save-excursion
+                                   (backward-word)
+                                   (point)))
+        (backward-char 1))
+      (or (when
+              (re-search-backward "[–(—]"
+                                  ;; limit search:
+                                  (save-excursion (clause-backward-sentence)
+                                                  (point))
+                                  t)
+            (skip-chars-forward "–(—")) ; leave point after clause char
           (clause-backward-sentence)))))
 
 ;;;###autoload
