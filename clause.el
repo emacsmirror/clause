@@ -97,7 +97,7 @@ Returns the position just after the character."
                      t)) ; nil when nothing found
 
 (defun clause--move-past-clause (&optional backward)
-  "Move past a clause character or space.
+  "Move past a clause character.
 With BACKWARD, move backwards."
   (let ((clause-chars "–(—-),;:.!?"))
     (if backward
@@ -113,6 +113,7 @@ With ARG, do this that many times."
   (interactive "p")
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
     (dotimes (_count (or arg 1))
+      (skip-chars-forward " ")
       (clause--move-past-clause)
       (or (clause--after-space-clause-char)
           (clause-forward-sentence))
