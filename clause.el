@@ -54,8 +54,9 @@ to use."
   "\\(\\[fn:[-_[:word:]]+\\]\\)?")
 
 (defvar clause-non-sentence-end-clause-re
-  ;; en dash, opening paren, em dash, 2 to 3 -
-  "\\([–(—]\\|\\(-\\)\\{2,3\\}\\)")
+  ;; en dash surrounded by spaces, opening paren, em dash no spaces,
+  ;; or 2 to 3 -
+  "\\([[:space:]]–[[:space:]]\\|(\\|—\\|\\(-\\)\\{2,3\\}\\)")
 
 (defun clause-forward-sentence-function ()
   "Return the forkward sentence function to use."
