@@ -24,8 +24,14 @@
 
 ;; Functions for moving, marking and killing by clause.
 
-;; A clause is delimited by , ; : ( ) and –. You can add extra
-;; delimiters by customizing `clause-extra-delimiters'
+;; A clause is delimited by , ; : ( ) and en or em dashes. You can add extra
+;; delimiters by customizing `clause-extra-delimiters'.
+
+;; We do our best to imitate `forward-sentence'/`backward-sentence'
+;; functionity, rather than rolling with our own preferences, even though with
+;; clauses it can only be approximated. So moving forward should leave point
+;; after the clause character, before any space, while moving backward should
+;; leave point after any clause character and after any space.
 
 ;;; Code:
 (require 'segment)
@@ -115,7 +121,8 @@ With ARG, do this that many times."
     (dotimes (_count (or arg 1))
       (skip-chars-forward " ")
       (clause--move-past-clause)
-      (or (clause--after-space-clause-char)
+      (or (when (clause--after-space-clause-char)
+            (skip-chars-backward " ")) ; for en dash + spaces
           (clause-forward-sentence))
       (clause--move-past-clause))))
 
@@ -126,6 +133,7 @@ With ARG, do this that many times."
   (interactive "p")
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
     (dotimes (_count (or arg 1))
+      (skip-chars-backward " ")
       (clause--move-past-clause :backward)
       (or (when
               (re-search-backward clause-non-sentence-end-clause-re
@@ -133,7 +141,9 @@ With ARG, do this that many times."
                                   (save-excursion (clause-backward-sentence)
                                                   (point))
                                   t)
-            (clause--move-past-clause))
+            (skip-chars-forward " ")
+            (clause--move-past-clause)
+            (skip-chars-forward " "))
           (clause-backward-sentence)))))
 
 ;;;###autoload
