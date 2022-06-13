@@ -108,14 +108,20 @@ Returns the position just after the character."
 With BACKWARD, move backwards.
 With NOSPACE, don't move past whitespace."
   (let ((clause-chars (if nospace
-                          ;; order here seems to matter for dashes?
-                          "-–(),;:.!?—"
-                        "- –(),;:.!?—")))
+                          "\\-–(),;:.!?—"
+                        "\\- –(),;:.!?—"))
+        moved-p) ; order matters for dashes
     (if backward
         (skip-chars-backward (concat clause-chars
                                      clause-extra-delimiters))
-      (skip-chars-forward (concat clause-chars
-                                  clause-extra-delimiters)))))
+      (setq moved-p (skip-chars-forward (concat clause-chars
+                                                clause-extra-delimiters)))
+      (when (and nospace (looking-at "[[:space:]]–"))
+        ;; only advance if whitespace + en dash
+        ;; run separate to not skip space after en dash
+        (skip-chars-forward " ")
+        (skip-chars-forward "–"))
+      moved-p))) ; return value for backward-clause
 
 ;;;###autoload
 (defun clause-forward-clause (&optional arg)
