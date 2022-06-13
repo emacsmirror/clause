@@ -99,13 +99,17 @@ Returns the position just after the character."
   (re-search-forward clause-non-sentence-end-clause-re
                      ;; limit search:
                      (save-excursion (clause-forward-sentence)
+                                     (skip-chars-forward " ")
                                      (point))
                      t)) ; nil when nothing found
 
-(defun clause--move-past-clause (&optional backward)
+(defun clause--move-past-clause-char (&optional backward nospace)
   "Move past a clause character.
-With BACKWARD, move backwards."
-  (let ((clause-chars "–(—-),;:.!?"))
+With BACKWARD, move backwards.
+With NOSPACE, don't move past whitespace."
+  (let ((clause-chars (if nospace
+                          "–(—-),;:.!?"
+                        " –(—-),;:.!?")))
     (if backward
         (skip-chars-backward (concat clause-chars
                                      clause-extra-delimiters))
@@ -119,12 +123,11 @@ With ARG, do this that many times."
   (interactive "p")
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
     (dotimes (_count (or arg 1))
-      (skip-chars-forward " ")
-      (clause--move-past-clause)
+      (clause--move-past-clause-char)
       (or (when (clause--after-space-clause-char)
             (skip-chars-backward " ")) ; for en dash + spaces
           (clause-forward-sentence))
-      (clause--move-past-clause))))
+      (clause--move-past-clause-char nil :nospace))))
 
 ;;;###autoload
 (defun clause-backward-clause (&optional arg)
@@ -133,17 +136,15 @@ With ARG, do this that many times."
   (interactive "p")
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
     (dotimes (_count (or arg 1))
-      (skip-chars-backward " ")
-      (clause--move-past-clause :backward)
+      (clause--move-past-clause-char :backward)
       (or (when
               (re-search-backward clause-non-sentence-end-clause-re
                                   ;; limit search:
                                   (save-excursion (clause-backward-sentence)
+                                                  (skip-chars-backward " ")
                                                   (point))
                                   t)
-            (skip-chars-forward " ")
-            (clause--move-past-clause)
-            (skip-chars-forward " "))
+            (clause--move-past-clause-char))
           (clause-backward-sentence)))))
 
 ;;;###autoload
