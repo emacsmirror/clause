@@ -30,7 +30,7 @@
 ;; We do our best to imitate `forward-sentence'/`backward-sentence'
 ;; functionity, rather than rolling with our own preferences, even though with
 ;; clauses it can only be approximated. So moving forward should leave point
-;; after the clause character, before any space, while moving backward should
+;; after the (last) clause character, before any space, while moving backward should
 ;; leave point after any clause character and after any space.
 
 ;;; Code:
