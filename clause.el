@@ -195,6 +195,13 @@ With ARG, do so that many times."
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
     (mark-end-of-sentence arg)))
 
+;;;###autoload
+(defun clause-transpose-clauses (&optional arg)
+  "Transpose current clause with next one."
+  ;; FIXME: ideally we would not take ending punctuation with us
+  (interactive)
+  (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
+    (transpose-sentences (or arg 1))))
 
 (provide 'clause)
 ;;; clause.el ends here
