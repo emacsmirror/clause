@@ -108,9 +108,10 @@ Returns the position just after the character."
 With BACKWARD, move backwards.
 With NOSPACE, don't move past whitespace."
   (let ((clause-chars (if nospace
+                          ;; order matters for dashes
                           "\\-–(),;:.!?—"
                         "\\- –(),;:.!?—"))
-        moved-p) ; order matters for dashes
+        moved-p)
     (if backward
         (skip-chars-backward (concat clause-chars
                                      clause-extra-delimiters))
