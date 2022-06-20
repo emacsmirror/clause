@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2022  Marty Hiatt
 ;; Author: Marty Hiatt <martianhiatus [a t] riseup [dot] net>
-;; Keywords: wp, convenience, sentences
+;; Keywords: wp, convenience, sentences, text
 ;; Version: 0.2
 ;; URL: https://codeberg.org/martianh/clause.el
 ;; Package-Requires: ((emacs "27.1") (segment "0.1") (mark-thing-at "0.3"))
