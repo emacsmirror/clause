@@ -1,6 +1,16 @@
 * clause.el
 
-This repo provides functions to move by clause, mark by clause, and kill by clause.
+This repo provides functions to move, mark, kill and transpose by clause.
+
+It provides the following commands:
+
+| =clause-forward-clause=      | move to next clause            |
+| =clause-backward-clause=     | move to previous clause        |
+| =clause-kill-current-clause= | kill whole current clause      |
+| =clause-kill-to-clause=      | kill from point to next clause |
+| =clause-mark-clause=         | mark whole current clause      |
+| =clause-mark-to-clause=      | mark from point to next clause |
+| =clause-transpose-clauses=   | transpose current clause       |
 
 A clause is delimited by =,= =;= =:= =(= =)= and =–= [en or em dashes], in addition to the characters in =sentence-end=. If you want to add any extra clause delimiters, customize =clause-extra-delimiters=.
 
