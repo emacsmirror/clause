@@ -124,6 +124,21 @@ With NOSPACE, don't move past whitespace."
         (skip-chars-forward "–"))
       moved-p))) ; return value for backward-clause
 
+(defun clause--at-clause-beginning-p ()
+  "Return t if point is at the begining of a clause.
+Or after the end of clause plus any whitespace."
+  (save-excursion
+    (backward-char 2)
+    ;; in case we backed into a en dash preceded by space:
+    ;; TODO: improve this crap:
+    (if (looking-back "[ \\t\\r\\n]+")
+        (forward-whitespace -1))
+    (or
+     (when clause-extra-delimiters
+       (looking-at clause-extra-delimiters))
+     (looking-at clause-non-sentence-end-clause-re)
+     (looking-at (clause--sentence-end-base-clause-re)))))
+
 ;;;###autoload
 (defun clause-forward-clause (&optional arg)
   "Move forward to beginning of next clause.
@@ -173,7 +188,8 @@ With ARG, do so that many times."
 With ARG, do so that many times."
   (interactive "p")
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
-    (clause-backward-clause)
+    (unless (clause--at-clause-beginning-p)
+      (clause-backward-clause))
     (dotimes (_count (or arg 1))
       (if (clause--after-space-clause-char)
           (kill-region (point) (re-search-forward
