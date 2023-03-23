@@ -131,7 +131,8 @@ Or after the end of clause plus any whitespace."
     (backward-char 2)
     ;; in case we backed into a en dash preceded by space:
     ;; TODO: improve this crap:
-    (if (looking-back "[ \\t\\r\\n]+")
+    (if (looking-back "[ \\t\\r\\n]+" (save-excursion
+                                        (clause-backward-sentence)))
         (forward-whitespace -1))
     (or
      (when clause-extra-delimiters
