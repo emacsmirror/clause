@@ -5,7 +5,7 @@
 ;; Keywords: wp, convenience, sentences, text
 ;; Version: 0.2
 ;; URL: https://codeberg.org/martianh/clause.el
-;; Package-Requires: ((emacs "27.1") (sentex "0.1") (mark-thing-at "0.3"))
+;; Package-Requires: ((emacs "27.1") (mark-thing-at "0.3"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@
 ;; leave point after any clause character and after any space.
 
 ;;; Code:
-(require 'sentex)
+(require 'sentex nil :no-error)
 (require 'mark-thing-at)
 
 (defgroup clause nil
