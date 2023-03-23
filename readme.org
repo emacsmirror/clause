@@ -25,12 +25,11 @@ If you set =clause-use-sentex= to t, this library uses the complex sentence-endi
 I use bindings like this:
 
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-S-E") #'clause-forward-clause)
-  (global-set-key (kbd "C-S-A") #'clause-backward-clause)
-  (global-set-key (kbd "C-S-K") #'clause-kill-to-clause)
-  (global-set-key (kbd "C-S-U") #'clause-kill-current-clause)
-  ;; mark-thing-at binding:
-  (define-key mark-thing-at-mode-map (kbd "C-x m a") #'clause-mark-clause)
+  (global-set-key (kbd "M-E") #'clause-forward-clause)
+  (global-set-key (kbd "M-A") #'clause-backward-clause)
+  (global-set-key (kbd "M-K") #'clause-kill-to-clause)
+  (global-set-key (kbd "M-U") #'clause-kill-current-clause)
+  (define-key mark-thing-at-mode-map (kbd "C-x m a") #'clause-mark-clause))
 #+end_src
 
 ** feedback, contributing
