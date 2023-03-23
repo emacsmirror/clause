@@ -214,7 +214,9 @@ With ARG, do so that many times."
 
 ;;;###autoload
 (defun clause-transpose-clauses (&optional arg)
-  "Transpose current clause with next one."
+  "Transpose current clause with next one.
+ARG is is a prefix given to `transpose-sentences', meaning
+transpose that many clauses."
   ;; FIXME: ideally we would not take ending punctuation with us
   (interactive)
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
