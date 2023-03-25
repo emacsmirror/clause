@@ -226,5 +226,20 @@ transpose that many clauses."
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))
     (transpose-sentences (or arg 1))))
 
+(defvar clause-mode-map
+  (let ((keymap (make-keymap)))
+    (define-key keymap (kbd "M-E") #'clause-forward-clause)
+    (define-key keymap (kbd "M-A") #'clause-backward-clause)
+    (define-key keymap (kbd "M-K") #'clause-kill-to-clause)
+    (define-key keymap (kbd "M-U") #'clause-kill-current-clause)
+    (define-key keymap (kbd (format "%s a" mark-thing-at-kemap-prefix)) #'clause-mark-clause)
+    keymap)
+  "Keymap for `clause-minor-mode'.")
+
+;;;###autoload
+(define-minor-mode clause-minor-mode
+  "Locally bind clause motion commands."
+  :lighter " Clause" :keymap clause-mode-map)
+
 (provide 'clause)
 ;;; clause.el ends here
