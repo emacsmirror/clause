@@ -5,7 +5,7 @@
 ;; Keywords: wp, convenience, sentences, text
 ;; Version: 0.2
 ;; URL: https://codeberg.org/martianh/clause.el
-;; Package-Requires: ((emacs "27.1") (sentex "0.1") (mark-thing-at "0.3"))
+;; Package-Requires: ((emacs "27.1") (mark-thing-at "0.3"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -30,11 +30,15 @@
 ;; We do our best to imitate `forward-sentence'/`backward-sentence'
 ;; functionity, rather than rolling with our own preferences, even though with
 ;; clauses it can only be approximated. So moving forward should leave point
-;; after the (last) clause character, before any space, while moving backward should
-;; leave point after any clause character and after any space.
+;; after the (last) clause character, before any space, while moving backward
+;; should leave point after any clause character and after any space.
+
+;; If sentex. is installed <https://codeberg.org/martianh/sentex>, set
+;; `clause-use-sentex' to t and clause.el will use its complex sentence-ending
+;; rules.
 
 ;;; Code:
-(require 'sentex)
+(require 'sentex nil :no-error)
 (require 'mark-thing-at)
 
 (defgroup clause nil
@@ -214,7 +218,9 @@ With ARG, do so that many times."
 
 ;;;###autoload
 (defun clause-transpose-clauses (&optional arg)
-  "Transpose current clause with next one."
+  "Transpose current clause with next one.
+ARG is is a prefix given to `transpose-sentences', meaning
+transpose that many clauses."
   ;; FIXME: ideally we would not take ending punctuation with us
   (interactive)
   (let ((sentence-end-base (clause--sentence-end-base-clause-re)))

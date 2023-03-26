@@ -2,6 +2,19 @@
 
 This repo provides functions to move, mark, kill and transpose by clause.
 
+** installing
+
+Clone the repo, at the directory location to your load path, and require =clause=.
+
+With straight:
+#+begin_src emacs-lisp
+(use-package clause
+  :straight (clause :type git
+                    :repo "https://codeberg.org/martianh/clause.el"))
+#+end_src
+
+** usage
+
 It provides the following commands:
 
 | =clause-forward-clause=      | move to next clause            |
@@ -12,24 +25,35 @@ It provides the following commands:
 | =clause-mark-to-clause=      | mark from point to next clause |
 | =clause-transpose-clauses=   | transpose current clause       |
 
-A clause is delimited by =,= =;= =:= =(= =)= and =–= [en or em dashes], in addition to the characters in =sentence-end=. If you want to add any extra clause delimiters, customize =clause-extra-delimiters=.
+A clause is delimited by =,= =;= =:= =(= =)= and =–= [en or em dashes], in addition to the
+characters in =sentence-end=. If you want to add any extra clause delimiters,
+customize =clause-extra-delimiters=.
 
-If aims to leave point in the same relative position as =forward-sentence= and =backward-sentence=, even though with some clauses this can only be approximated. So moving forward should leave point after the (last) clause character, before any space, while moving backward should leave point after any clause character and after any space. Likewise, as with =kill-sentence=, killing forward should kill the clause character but not a following space.
+If aims to leave point in the same relative position as =forward-sentence= and
+=backward-sentence=, even though with some clauses this can only be
+approximated. So moving forward should leave point after the (last) clause
+character, before any space, while moving backward should leave point after
+any clause character and after any space. Likewise, as with =kill-sentence=,
+killing forward should kill the clause character but not a following space.
 
 It should handle org footnotes correctly too, if they aren't inline.
 
-If you set =clause-use-sentex= to t, this library uses the complex sentence-ending rules in [[https://codeberg.org/martianh/sentex][sentex.el]] to avoid counting things like "i.e." as ending sentences. You may need to set the language for =sentex= to use. See =sentex-current-language= and =sentex-set-language=.
+If you install [[https://codeberg.org/martianh/sentex][sentex.el]], and set =clause-use-sentex= to t, this library uses
+the complex sentence-ending rules in =setex= to avoid counting things like
+"i.e." as ending sentences. You may need to set the language for =sentex= to
+use. See =sentex-current-language= and =sentex-set-language=.
 
 ** bindings
 
 I use bindings like this:
 
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-S-E") #'clause-forward-clause)
-  (global-set-key (kbd "C-S-A") #'clause-backward-clause)
-  (global-set-key (kbd "C-S-K") #'clause-kill-to-clause)
-  (global-set-key (kbd "C-S-U") #'clause-kill-current-clause)
-  ;; mark-thing-at binding:
+  ;; NB: crazy emacs notation for alt-shift-$char:
+  (global-set-key (kbd "M-E") #'clause-forward-clause)
+  (global-set-key (kbd "M-A") #'clause-backward-clause)
+  (global-set-key (kbd "M-K") #'clause-kill-to-clause)
+  (global-set-key (kbd "M-U") #'clause-kill-current-clause)
+  ;; if you have mark-thing-at mode:
   (define-key mark-thing-at-mode-map (kbd "C-x m a") #'clause-mark-clause)
 #+end_src
 
