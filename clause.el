@@ -232,7 +232,7 @@ transpose that many clauses."
     (define-key keymap (kbd "M-A") #'clause-backward-clause)
     (define-key keymap (kbd "M-K") #'clause-kill-to-clause)
     (define-key keymap (kbd "M-U") #'clause-kill-current-clause)
-    (define-key keymap (kbd (format "%s a" mark-thing-at-kemap-prefix)) #'clause-mark-clause)
+    (define-key keymap (kbd (format "%s a" mark-thing-at-keymap-prefix)) #'clause-mark-clause)
     keymap)
   "Keymap for `clause-minor-mode'.")
 
