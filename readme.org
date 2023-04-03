@@ -4,9 +4,11 @@ This repo provides functions to move, mark, kill and transpose by clause.
 
 ** installing
 
-Clone the repo, at the directory location to your load path, and require =clause=.
+Clause is now on MELPA, you can install it with =M-x package-install RET clause RET=.
 
-With straight:
+Else clone the repo, at the directory to your load path, and require =clause=.
+
+Or with straight.el:
 #+begin_src emacs-lisp
 (use-package clause
   :straight (clause :type git
@@ -56,6 +58,8 @@ I use bindings like this:
   ;; if you have mark-thing-at mode:
   (define-key mark-thing-at-mode-map (kbd "C-x m a") #'clause-mark-clause)
 #+end_src
+
+If you like the look of them, you can enable =clause-minor-mode= to use them.
 
 ** feedback, contributing
 
