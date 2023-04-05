@@ -33,7 +33,7 @@
 ;; after the (last) clause character, before any space, while moving backward
 ;; should leave point after any clause character and after any space.
 
-;; If sentex. is installed <https://codeberg.org/martianh/sentex>, set
+;; If sentex is installed <https://codeberg.org/martianh/sentex>, set
 ;; `clause-use-sentex' to t and clause.el will use its complex sentence-ending
 ;; rules.
 
