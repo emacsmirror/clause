@@ -1,7 +1,7 @@
 ;;; clause.el --- Functions to move, mark, kill by clause -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022  Marty Hiatt
-;; Author: Marty Hiatt <martianhiatus [a t] riseup [dot] net>
+;; Author: Marty Hiatt <mousebot@disroot.org>
 ;; Keywords: wp, convenience, sentences, text
 ;; Version: 0.2
 ;; URL: https://codeberg.org/martianh/clause.el
